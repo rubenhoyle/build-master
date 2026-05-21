@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildMaster - Professional Tools Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            font-size: 1.5rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #ff6b6b;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 20px;
+            text-align: center;
+            border-bottom: 5px solid #ff6b6b;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: -3rem auto 2rem;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .tool-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .tool-info {
+            padding: 1.5rem;
+        }
+
+        .tool-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .tool-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tool-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .add-to-cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .add-to-cart-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            color: #ff6b6b;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #ff5252;
+        }
+
+        .modal h2 {
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            color: #1a1a2e;
+        }
+
+        .cart-item-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qty-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .remove-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #ff5252;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        .cart-total {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a1a2e;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid #667eea;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: slideInRight 0.3s ease;
+            z-index: 2000;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .header-container {
+                justify-content: space-between;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">🔧</div>
+                <span>BuildMaster</span>
+            </div>
+            <div class="cart-icon" onclick="openCart()">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>🏗️ Welcome to BuildMaster</h1>
+        <p>Your One-Stop Shop for Professional Tools & Equipment</p>
+        <button class="cta-button" onclick="document.querySelector('.tools-grid').scrollIntoView({behavior: 'smooth'})">
+            Shop Now
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="section-title">Featured Tools</h2>
+
+        <!-- Tools Grid -->
+        <div class="tools-grid" id="toolsGrid"></div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCart()">&times;</span>
+            <h2>🛒 Shopping Cart</h2>
+            <div id="cartItems"></div>
+            <div id="cartTotal" class="cart-total" style="display: none;">
+                <span>Total:</span>
+                <span id="totalPrice">$0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" onclick="checkout()" disabled>
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>BuildMaster</h3>
+            <p>Quality Tools for Every Project</p>
+            <p>&copy; 2024 BuildMaster. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#about">About Us</a>
+                <a href="#shipping">Shipping</a>
+                <a href="#returns">Returns</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tools Data
+        const tools = [
+            {
+                id: 1,
+                name: "Cordless Drill",
+                price: 89.99,
+                description: "Powerful 18V cordless drill with variable speed and impact mode",
+                image: "https://tse1.mm.bing.net/th/id/OIP.9xaaQBPenhEAwDIqznvS0gHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+            },
+            {
+                id: 2,
+                name: "Hammer Set",
+                price: 34.99,
+                description: "Professional 5-piece hammer set with ergonomic grips",
+                image: "https://static.summitracing.com/global/images/prod/xlarge/ttn-63125_xl.jpg"
+            },
+            {
+                id: 3,
+                name: "Measuring Tape",
+                price: 12.99,
+                description: "25-meter steel measuring tape with automatic lock",
+                image: "https://th.bing.com/th/id/R.106b891b9808e558f57af9992eddba97?rik=PIVOQqkYVuAcbA&riu=http%3a%2f%2fc.shld.net%2frpx%2fi%2fs%2fi%2fspin%2fimage%2fspin_prod_953067512&ehk=MiljOTam2fhwzsQbZbuCeQyscMpDWbkmrxwMjhJjRpc%3d&risl=&pid=ImgRaw&r=0"
+            },
+            {
+                id: 4,
+                name: "Wrench Set",
+                price: 45.99,
+                description: "12-piece chrome wrench set for all your needs",
+                image: "https://i5.walmartimages.com/seo/12-Piece-Reversible-Ratcheting-Combination-Wrench-Set-8mm-19mm-Metric-Chrome-Vanadium-Steel-Ratchet-Wrenches-Set-with-Pouch_77b11405-e0b2-47b1-85a7-b50d3218acc5.76035890bf4aaf14e36ebd602977c17d.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF"
+            },
+            {
+                id: 5,
+                name: "Tool Box",
+                price: 129.99,
+                description: "Large portable tool box with organizational compartments",
+                image: "https://tse2.mm.bing.net/th/id/OIP.1fnpfsQ7k0rbQWYlwOj67QHaFL?cb=thfc1falcon&w=2144&h=1500&rs=1&pid=ImgDetMain&o=7&rm=3"
+            },
+            {
+                id: 6,
+                name: "Safety Glasses",
+                price: 19.99,
+                description: "Professional UV protection safety glasses",
+                image: "https://m.media-amazon.com/images/I/519owVJoeqS.jpg"
+            },
+            {
+                id: 7,
+                name: "Work Gloves",
+                price: 24.99,
+                description: "Durable leather work gloves for maximum grip and protection",
+                image: "https://tse4.mm.bing.net/th/id/OIP.gPB5aGxQZH2QG5tPKzLw6AHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3"
+            },
+            {
+                id: 8,
+                name: "Power Saw",
+                price: 199.99,
+                description: "Precision circular saw with laser guide and dust blower",
+                image: "https://image.made-in-china.com/2f0j00vYRUoTrZVMqa/185mm-Circular-Saw-Professional-Electric-Power-Tools.jpg"
+            },
+            {
+                id: 9,
+                name: "Screwdriver Set",
+                price: 22.99,
+                description: "32-piece precision screwdriver set with magnetic tips",
+                image: "https://static-01.daraz.com.bd/p/82da5e941ad6eb98eb8549f59c947a07.jpg"
+            },
+            {
+                id: 10,
+                name: "LED Flashlight",
+                price: 39.99,
+                description: "Ultra-bright 1000 lumens LED flashlight with rechargeable battery",
+                image: "https://images-na.ssl-images-amazon.com/images/I/71U4FIwsf6L.jpg"
+            }
+        ];
+
+        let cart = [];
+
+        // Initialize
+        function init() {
+            renderTools();
+            loadCart();
+        }
+
+        // Render Tools
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = tools.map(tool => `
+                <div class="tool-card">
+                    <img src="${tool.image}" alt="${tool.name}" class="tool-image" onerror="this.src='https://via.placeholder.com/400x300?text=${encodeURIComponent(tool.name)}'">
+                    <div class="tool-info">
+                        <div class="tool-name">${tool.name}</div>
+                        <div class="tool-description">${tool.description}</div>
+                        <div class="tool-footer">
+                            <span class="tool-price">$${tool.price}</span>
+                            <button class="add-to-cart-btn" onclick="addToCart(${tool.id})">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add to Cart
+        function addToCart(toolId) {
+            const tool = tools.find(t => t.id === toolId);
+            const existingItem = cart.find(item => item.id === toolId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...tool, quantity: 1 });
+            }
+
+            saveCart();
+            updateCartCount();
+            showSuccessMessage(`${tool.name} added to cart!`);
+        }
+
+        // Remove from Cart
+        function removeFromCart(toolId) {
+            cart = cart.filter(item => item.id !== toolId);
+            saveCart();
+            updateCartCount();
+            renderCart();
+        }
+
+        // Update Quantity
+        function updateQuantity(toolId, change) {
+            const item = cart.find(item => item.id === toolId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(toolId);
+                } else {
+                    saveCart();
+                    renderCart();
+                }
+            }
+        }
+
+        // Render Cart
+        function renderCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartTotalDiv = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div class="cart-empty">Your cart is empty. Start shopping! 🛍️</div>';
+                cartTotalDiv.style.display = 'none';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            let total = 0;
+            cartItemsDiv.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)} each</div>
+                        </div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                            <span style="width: 30px; text-align: center; font-weight: bold;">${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <span style="min-width: 70px; text-align: right; font-weight: bold; color: #667eea;">$${itemTotal.toFixed(2)}</span>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('totalPrice').textContent = '$' + total.toFixed(2);
+            cartTotalDiv.style.display = 'flex';
+            checkoutBtn.disabled = false;
+        }
+
+        // Cart Functions
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'block';
+            renderCart();
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Checkout
+        function checkout() {
+            if (cart.length === 0) return;
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const itemsList = cart.map(item => `${item.name} (x${item.quantity})`).join('\n');
+
+            alert(`🎉 Order Confirmed!\n\nItems:\n${itemsList}\n\nTotal: $${total.toFixed(2)}\n\nThank you for your purchase!`);
+
+            cart = [];
+            saveCart();
+            updateCartCount();
+            closeCart();
+        }
+
+        // LocalStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function loadCart() {
+            const saved = localStorage.getItem('cart');
+            if (saved) {
+                cart = JSON.parse(saved);
+                updateCartCount();
+            }
+        }
+
+        // Success Message
+        function showSuccessMessage(message) {
+            const msg = document.createElement('div');
+            msg.className = 'success-message';
+            msg.textContent = message;
+            document.body.appendChild(msg);
+
+            setTimeout(() => {
+                msg.remove();
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
